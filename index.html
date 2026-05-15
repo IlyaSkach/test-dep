@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#1a56db" />
+  <meta name="theme-color" content="#16a34a" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Калькулятор тепловой нагрузки</title>
@@ -12,40 +12,52 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --primary: #1a56db;
-      --primary-light: #3f83f8;
-      --primary-dark: #1e40af;
-      --accent: #f97316;
-      --accent-light: #fed7aa;
-      --success: #10b981;
-      --danger: #ef4444;
-      --bg: #f0f4ff;
-      --card: #ffffff;
-      --text: #1e293b;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 4px 24px rgba(26,86,219,0.10);
-      --radius: 16px;
-      --radius-sm: 10px;
+      --primary:        #16a34a;
+      --primary-light:  #22c55e;
+      --primary-dark:   #15803d;
+      --primary-faint:  #dcfce7;
+      --accent:         #f97316;
+      --accent-light:   #fed7aa;
+      --success:        #16a34a;
+      --danger:         #ef4444;
+      --warn:           #f59e0b;
+      --bg:             #f0fdf4;
+      --card:           #ffffff;
+      --text:           #14532d;
+      --text-body:      #1e293b;
+      --text-muted:     #64748b;
+      --border:         #d1fae5;
+      --border-dark:    #bbf7d0;
+      --shadow:         0 4px 24px rgba(22,163,74,0.10);
+      --radius:         16px;
+      --radius-sm:      10px;
     }
 
     html { font-size: 16px; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: var(--text-body);
       min-height: 100dvh;
       overflow-x: hidden;
     }
 
-    /* HEADER */
+    /* ── HEADER ─────────────────────────────── */
     .header {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 55%, var(--primary-light) 100%);
       color: #fff;
-      padding: 20px 16px 28px;
+      padding: 20px 16px 32px;
       text-align: center;
       position: relative;
       overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
     }
     .header::after {
       content: '';
@@ -55,54 +67,26 @@
       background: var(--bg);
       border-radius: 50% 50% 0 0 / 100% 100% 0 0;
     }
-    .header-icon { font-size: 2.5rem; margin-bottom: 6px; display: block; }
-    .header h1 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
-    .header p { font-size: 0.82rem; opacity: 0.85; margin-top: 4px; }
+    .header-icon { font-size: 2.6rem; margin-bottom: 6px; display: block; position: relative; z-index: 1; }
+    .header h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; position: relative; z-index: 1; }
+    .header p { font-size: 0.8rem; opacity: 0.88; margin-top: 4px; position: relative; z-index: 1; }
 
-    /* MAIN */
-    main { padding: 12px 12px 100px; max-width: 560px; margin: 0 auto; }
+    /* ── MAIN ───────────────────────────────── */
+    main { padding: 12px 12px 110px; max-width: 560px; margin: 0 auto; }
 
-    /* TABS */
-    .tabs {
-      display: flex;
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 4px;
-      gap: 4px;
-      margin-bottom: 16px;
-      box-shadow: var(--shadow);
-    }
-    .tab-btn {
-      flex: 1;
-      padding: 10px 6px;
-      border: none;
-      background: transparent;
-      border-radius: var(--radius-sm);
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      line-height: 1.3;
-    }
-    .tab-btn.active {
-      background: var(--primary);
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(26,86,219,0.3);
-    }
-
-    /* CARD */
+    /* ── CARD ───────────────────────────────── */
     .card {
       background: var(--card);
       border-radius: var(--radius);
       padding: 16px;
       margin-bottom: 12px;
       box-shadow: var(--shadow);
+      border: 1px solid var(--border);
     }
     .card-title {
       font-size: 0.88rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--primary-dark);
       margin-bottom: 14px;
       display: flex;
       align-items: center;
@@ -110,26 +94,28 @@
     }
     .card-title .icon { font-size: 1.1rem; }
 
-    /* FORM GROUPS */
+    /* ── FORM ───────────────────────────────── */
     .form-group { margin-bottom: 14px; }
     .form-group:last-child { margin-bottom: 0; }
     label {
-      display: block;
+      display: flex;
+      align-items: center;
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--text-muted);
       margin-bottom: 6px;
+      gap: 4px;
     }
-    label span { color: var(--danger); margin-left: 2px; }
+    label .req { color: var(--danger); }
 
     input[type="number"], select {
       width: 100%;
       padding: 13px 14px;
-      border: 2px solid var(--border);
+      border: 2px solid var(--border-dark);
       border-radius: var(--radius-sm);
       font-size: 1rem;
-      color: var(--text);
-      background: #f8fafc;
+      color: var(--text-body);
+      background: #f8fffe;
       appearance: none;
       -webkit-appearance: none;
       transition: border-color 0.2s, box-shadow 0.2s;
@@ -137,356 +123,357 @@
     }
     input[type="number"]:focus, select:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
+      box-shadow: 0 0 0 3px rgba(22,163,74,0.15);
       background: #fff;
     }
     select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2316a34a' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       padding-right: 40px;
+      background-color: #f8fffe;
     }
 
-    /* GRID */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 
-    /* HINT */
-    .hint {
-      font-size: 0.73rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
+    .hint { font-size: 0.73rem; color: var(--text-muted); margin-top: 4px; }
 
-    /* RANGE SLIDER */
+    /* ── RANGE SLIDER ───────────────────────── */
     .slider-wrap { display: flex; align-items: center; gap: 10px; }
     .slider-wrap input[type="range"] {
       flex: 1;
       -webkit-appearance: none;
       appearance: none;
-      height: 6px;
-      border-radius: 3px;
-      background: linear-gradient(to right, var(--primary) 0%, var(--primary) var(--pct, 50%), var(--border) var(--pct, 50%), var(--border) 100%);
-      border: none;
-      padding: 0;
-      outline: none;
+      height: 7px;
+      border-radius: 4px;
+      background: linear-gradient(to right, var(--primary) 0%, var(--primary) var(--pct,50%), var(--border-dark) var(--pct,50%), var(--border-dark) 100%);
+      border: none; padding: 0; outline: none;
     }
     .slider-wrap input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 22px; height: 22px;
+      width: 24px; height: 24px;
       border-radius: 50%;
       background: var(--primary);
-      box-shadow: 0 2px 6px rgba(26,86,219,0.4);
+      box-shadow: 0 2px 8px rgba(22,163,74,0.45);
       cursor: pointer;
     }
-    .slider-val {
-      min-width: 40px;
-      text-align: right;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--primary);
-    }
+    .slider-val { min-width: 44px; text-align: right; font-weight: 700; font-size: 0.92rem; color: var(--primary); }
 
-    /* COUNTER */
-    .counter { display: flex; align-items: center; gap: 0; border: 2px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: #f8fafc; }
+    /* ── COUNTER ────────────────────────────── */
+    .counter {
+      display: flex; align-items: center;
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #f8fffe;
+    }
     .counter-btn {
-      width: 48px; height: 48px;
-      border: none;
-      background: transparent;
-      font-size: 1.4rem;
-      font-weight: 700;
+      width: 50px; height: 50px;
+      border: none; background: transparent;
+      font-size: 1.5rem; font-weight: 700;
       color: var(--primary);
-      cursor: pointer;
-      flex-shrink: 0;
+      cursor: pointer; flex-shrink: 0;
       transition: background 0.15s;
       touch-action: manipulation;
     }
-    .counter-btn:active { background: rgba(26,86,219,0.1); }
+    .counter-btn:active { background: var(--primary-faint); }
     .counter input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      text-align: center;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--text);
-      padding: 0;
+      flex: 1; border: none; background: transparent;
+      text-align: center; font-size: 1.1rem; font-weight: 700;
+      color: var(--text-body); padding: 0;
     }
     .counter input:focus { outline: none; }
 
-    /* RESULT */
-    .result-card {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-      border-radius: var(--radius);
-      padding: 20px 16px;
-      color: #fff;
-      margin-bottom: 12px;
-      box-shadow: 0 8px 32px rgba(26,86,219,0.25);
-      position: relative;
-      overflow: hidden;
+    /* ── SECTION LABEL ──────────────────────── */
+    .section-label {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--primary-dark);
+      margin: 16px 0 8px;
+      display: flex; align-items: center; gap: 6px;
     }
-    .result-card::before {
-      content: '🔥';
-      position: absolute;
-      right: 16px; top: 16px;
-      font-size: 3rem;
-      opacity: 0.15;
-    }
-    .result-label { font-size: 0.82rem; opacity: 0.85; margin-bottom: 6px; }
-    .result-value {
-      font-size: 2.8rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1;
-    }
-    .result-unit { font-size: 1.1rem; font-weight: 500; opacity: 0.8; margin-left: 4px; }
-    .result-sub {
-      font-size: 0.85rem;
-      opacity: 0.75;
-      margin-top: 6px;
+    .section-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: var(--border-dark);
     }
 
-    .result-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
-    .result-item {
-      background: var(--card);
-      border-radius: var(--radius-sm);
-      padding: 14px 12px;
-      box-shadow: var(--shadow);
-    }
-    .result-item-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
-    .result-item-value { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
-    .result-item-unit { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
-
-    /* RECOMMENDATION */
-    .rec-card {
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      margin-bottom: 10px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-    .rec-card.warn { background: #fff7ed; border-left: 4px solid var(--accent); }
-    .rec-card.info { background: #eff6ff; border-left: 4px solid var(--primary); }
-    .rec-card.ok { background: #ecfdf5; border-left: 4px solid var(--success); }
-    .rec-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
-    .rec-text { font-size: 0.8rem; line-height: 1.5; color: var(--text); }
-    .rec-text strong { display: block; margin-bottom: 2px; font-size: 0.82rem; }
-
-    /* CALC BTN */
-    .calc-btn {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(26,86,219,0.35);
-      transition: transform 0.15s, box-shadow 0.15s;
-      margin-top: 4px;
-      touch-action: manipulation;
-      letter-spacing: 0.01em;
-    }
-    .calc-btn:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(26,86,219,0.25); }
-
-    /* RESET BTN */
-    .reset-btn {
-      width: 100%;
-      padding: 13px;
-      background: transparent;
+    /* ── TOGGLE CHIPS ───────────────────────── */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 8px 14px;
+      border-radius: 50px;
+      border: 2px solid var(--border-dark);
+      background: #f8fffe;
+      font-size: 0.78rem; font-weight: 600;
       color: var(--text-muted);
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 0.9rem;
-      font-weight: 600;
       cursor: pointer;
-      margin-top: 8px;
       transition: all 0.15s;
       touch-action: manipulation;
     }
-    .reset-btn:active { background: var(--border); }
+    .chip.active {
+      border-color: var(--primary);
+      background: var(--primary-faint);
+      color: var(--primary-dark);
+    }
+    .chip:active { opacity: 0.7; }
 
-    /* TAB CONTENT */
+    /* ── RESULT CARD ────────────────────────── */
+    .result-hero {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      color: #fff;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 32px rgba(22,163,74,0.28);
+      position: relative; overflow: hidden;
+    }
+    .result-hero::before {
+      content: '🔥';
+      position: absolute; right: 14px; top: 12px;
+      font-size: 4rem; opacity: 0.12; pointer-events: none;
+    }
+    .result-label { font-size: 0.82rem; opacity: 0.88; margin-bottom: 6px; }
+    .result-value { font-size: 3rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+    .result-unit  { font-size: 1.15rem; font-weight: 500; opacity: 0.8; margin-left: 4px; }
+    .result-sub   { font-size: 0.84rem; opacity: 0.76; margin-top: 6px; }
+
+    /* ── RESULT GRID ────────────────────────── */
+    .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+    .result-item {
+      background: var(--card); border-radius: var(--radius-sm);
+      padding: 14px 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .result-item-label { font-size: 0.71rem; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
+    .result-item-value { font-size: 1.3rem; font-weight: 800; color: var(--primary-dark); }
+    .result-item-unit  { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+
+    /* ── ENERGY CLASS ───────────────────────── */
+    .eclass-scale { display: flex; flex-direction: column; gap: 5px; }
+    .eclass-row {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.78rem;
+    }
+    .eclass-badge {
+      width: 32px; height: 24px;
+      border-radius: 4px; display: flex;
+      align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.75rem;
+      color: #fff; flex-shrink: 0;
+    }
+    .eclass-bar { flex: 1; height: 20px; border-radius: 4px; opacity: 0.25; position: relative; }
+    .eclass-bar.active { opacity: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    .eclass-row.active .eclass-row-label { font-weight: 700; color: var(--text-body); }
+    .eclass-row-label { color: var(--text-muted); }
+    .eclass-row-range { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
+    .eclass-arrow {
+      font-size: 1rem; margin-left: 4px;
+      display: none;
+    }
+    .eclass-row.active .eclass-arrow { display: inline; }
+
+    /* ── FUEL CARD ──────────────────────────── */
+    .fuel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .fuel-item {
+      background: var(--primary-faint);
+      border: 1.5px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .fuel-item-icon { font-size: 1.6rem; margin-bottom: 4px; display: block; }
+    .fuel-item-val { font-size: 1.15rem; font-weight: 800; color: var(--primary-dark); }
+    .fuel-item-unit { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+    .fuel-item-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── RADIATOR WIDGET ────────────────────── */
+    .rad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .rad-item {
+      background: var(--primary-faint);
+      border: 1.5px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      padding: 12px 8px; text-align: center;
+    }
+    .rad-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+    .rad-val { font-size: 1.3rem; font-weight: 800; color: var(--primary-dark); }
+    .rad-label { font-size: 0.68rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── MINI CHART (horizontal bars) ──────── */
+    .loss-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .loss-row:last-child { margin-bottom: 0; }
+    .loss-icon { font-size: 1rem; width: 22px; flex-shrink: 0; }
+    .loss-label { font-size: 0.78rem; color: var(--text-muted); width: 100px; flex-shrink: 0; }
+    .loss-bar-wrap { flex: 1; background: var(--border); border-radius: 4px; height: 14px; overflow: hidden; }
+    .loss-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(to right, var(--primary-dark), var(--primary-light)); }
+    .loss-kw { font-size: 0.78rem; font-weight: 700; color: var(--primary-dark); min-width: 46px; text-align: right; }
+
+    /* ── REC CARDS ──────────────────────────── */
+    .rec-card {
+      border-radius: var(--radius-sm); padding: 12px 14px;
+      margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start;
+    }
+    .rec-card:last-child { margin-bottom: 0; }
+    .rec-card.warn { background: #fff7ed; border-left: 4px solid var(--accent); }
+    .rec-card.info { background: #f0fdf4; border-left: 4px solid var(--primary); }
+    .rec-card.ok   { background: #ecfdf5; border-left: 4px solid #10b981; }
+    .rec-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+    .rec-text { font-size: 0.79rem; line-height: 1.5; color: var(--text-body); }
+    .rec-text strong { display: block; margin-bottom: 2px; font-size: 0.81rem; }
+
+    /* ── PROGRESS BAR ───────────────────────── */
+    .progress-bar-wrap { background: var(--border-dark); border-radius: 6px; height: 10px; overflow: hidden; margin: 6px 0 2px; }
+    .progress-bar-fill { height: 100%; border-radius: 6px; background: linear-gradient(to right, var(--primary-dark), var(--primary-light)); transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+
+    /* ── BUTTONS ────────────────────────────── */
+    .calc-btn {
+      width: 100%; padding: 17px;
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+      color: #fff; border: none; border-radius: var(--radius);
+      font-size: 1.05rem; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(22,163,74,0.38);
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-top: 4px; touch-action: manipulation; letter-spacing: 0.01em;
+    }
+    .calc-btn:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(22,163,74,0.22); }
+
+    .reset-btn {
+      width: 100%; padding: 13px;
+      background: transparent; color: var(--text-muted);
+      border: 2px solid var(--border-dark); border-radius: var(--radius);
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      margin-top: 8px; transition: all 0.15s; touch-action: manipulation;
+    }
+    .reset-btn:active { background: var(--primary-faint); }
+
+    .share-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 13px;
+      background: var(--primary); color: #fff;
+      border: none; border-radius: var(--radius);
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      margin-top: 8px; touch-action: manipulation; transition: opacity 0.2s;
+    }
+    .share-btn:active { opacity: 0.82; }
+
+    /* ── BADGES ─────────────────────────────── */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
+    .badge-green  { background: #d1fae5; color: #065f46; }
+    .badge-lime   { background: #ecfccb; color: #365314; }
+    .badge-orange { background: var(--accent-light); color: #c2410c; }
+    .badge-red    { background: #fee2e2; color: #991b1b; }
+
+    /* ── TABS / NAV ─────────────────────────── */
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* INFO TABLE */
-    .info-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-    .info-table th, .info-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); }
-    .info-table th { font-weight: 700; color: var(--primary); background: #f0f4ff; }
-    .info-table tr:last-child td { border-bottom: none; }
-    .info-table td:last-child { text-align: right; font-weight: 600; }
-
-    /* BADGES */
-    .badge {
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      font-weight: 700;
-    }
-    .badge-blue { background: #dbeafe; color: var(--primary-dark); }
-    .badge-orange { background: var(--accent-light); color: #c2410c; }
-    .badge-green { background: #d1fae5; color: #065f46; }
-
-    /* BOTTOM NAV */
     .bottom-nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
+      position: fixed; bottom: 0; left: 0; right: 0;
       background: var(--card);
-      border-top: 1px solid var(--border);
+      border-top: 1.5px solid var(--border-dark);
       display: flex;
       padding: 8px 0 max(8px, env(safe-area-inset-bottom));
       z-index: 100;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 -4px 20px rgba(22,163,74,0.10);
     }
     .nav-btn {
-      flex: 1;
-      border: none;
-      background: transparent;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      padding: 4px 0;
-      cursor: pointer;
-      color: var(--text-muted);
-      font-size: 0.68rem;
-      font-weight: 600;
-      transition: color 0.2s;
-      touch-action: manipulation;
+      flex: 1; border: none; background: transparent;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 4px 0; cursor: pointer;
+      color: var(--text-muted); font-size: 0.67rem; font-weight: 600;
+      transition: color 0.2s; touch-action: manipulation;
     }
     .nav-btn .nav-icon { font-size: 1.4rem; line-height: 1; }
-    .nav-btn.active { color: var(--primary); }
-
-    /* SECTION DIVIDER */
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      margin: 16px 0 8px;
+    .nav-btn.active { color: var(--primary-dark); }
+    .nav-btn.active .nav-icon-wrap {
+      background: var(--primary-faint);
+      border-radius: 12px;
+      padding: 2px 14px;
     }
 
-    /* TOOLTIP */
-    .tooltip-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: var(--border);
-      color: var(--text-muted);
-      font-size: 0.65rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      margin-left: 4px;
-      vertical-align: middle;
-    }
+    /* ── INFO TABLE ─────────────────────────── */
+    .info-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .info-table th, .info-table td { padding: 10px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+    .info-table th { font-weight: 700; color: var(--primary-dark); background: var(--primary-faint); }
+    .info-table tr:last-child td { border-bottom: none; }
+    .info-table td:last-child { text-align: right; font-weight: 600; }
 
-    /* ANIMATE */
+    /* ── COST SUMMARY ───────────────────────── */
+    .cost-total {
+      background: linear-gradient(135deg, #14532d 0%, var(--primary-dark) 100%);
+      color: #fff; border-radius: var(--radius-sm);
+      padding: 16px; text-align: center; margin-bottom: 10px;
+    }
+    .cost-total-label { font-size: 0.8rem; opacity: 0.85; margin-bottom: 4px; }
+    .cost-total-val { font-size: 2rem; font-weight: 800; }
+    .cost-total-unit { font-size: 0.85rem; opacity: 0.75; margin-top: 2px; }
+
+    /* ── ANIMATE ────────────────────────────── */
     @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
     .animate { animation: slideUp 0.35s ease both; }
 
-    /* SHARE BTN */
-    .share-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 13px;
-      background: var(--success);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 8px;
-      touch-action: manipulation;
-      transition: opacity 0.2s;
-    }
-    .share-btn:active { opacity: 0.85; }
-
-    /* PROGRESS BAR */
-    .progress-bar-wrap { background: var(--border); border-radius: 4px; height: 8px; overflow: hidden; margin: 6px 0 2px; }
-    .progress-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(to right, var(--primary), var(--primary-light)); transition: width 0.4s ease; }
-
-    /* EMPTY STATE */
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--text-muted);
-    }
+    /* ── EMPTY STATE ────────────────────────── */
+    .empty-state { text-align: center; padding: 44px 20px; color: var(--text-muted); }
     .empty-state .icon { font-size: 3.5rem; margin-bottom: 12px; }
-    .empty-state p { font-size: 0.88rem; line-height: 1.6; }
+    .empty-state p { font-size: 0.88rem; line-height: 1.65; }
 
     @media (min-width: 480px) {
       .header h1 { font-size: 1.6rem; }
-      main { padding: 16px 16px 100px; }
+      main { padding: 16px 16px 110px; }
     }
   </style>
 </head>
 <body>
 
 <div class="header">
-  <span class="header-icon">🌡️</span>
+  <span class="header-icon">🌿</span>
   <h1>Тепловая нагрузка</h1>
-  <p>Расчёт мощности отопления по СП 60.13330</p>
+  <p>Расчёт мощности отопления · СП 60.13330.2020</p>
 </div>
 
 <main>
-  <!-- TAB CONTENT: CALCULATOR -->
+
+  <!-- ═══════════════════ TAB: РАСЧЁТ ═══════════════════ -->
   <div class="tab-content active" id="tab-calc">
 
-    <div class="section-label">Параметры помещения</div>
+    <div class="section-label">Геометрия помещения</div>
 
     <div class="card">
-      <div class="card-title"><span class="icon">📐</span> Геометрия</div>
-
+      <div class="card-title"><span class="icon">📐</span> Размеры</div>
       <div class="grid-2">
         <div class="form-group">
-          <label>Площадь <span>*</span></label>
+          <label>Площадь <span class="req">*</span></label>
           <input type="number" id="area" placeholder="50" min="1" max="10000" step="0.5" inputmode="decimal" />
           <div class="hint">м²</div>
         </div>
         <div class="form-group">
-          <label>Высота потолков <span>*</span></label>
+          <label>Высота потолков <span class="req">*</span></label>
           <input type="number" id="height" placeholder="2.7" min="1.5" max="10" step="0.1" inputmode="decimal" />
           <div class="hint">м</div>
         </div>
       </div>
-
       <div class="form-group">
-        <label>Количество наружных стен</label>
+        <label>Наружных стен</label>
         <div class="counter">
-          <button class="counter-btn" onclick="changeCounter('walls', -1)">−</button>
+          <button class="counter-btn" onclick="changeCounter('walls',-1)">−</button>
           <input type="number" id="walls" value="1" min="0" max="4" readonly />
-          <button class="counter-btn" onclick="changeCounter('walls', 1)">+</button>
+          <button class="counter-btn" onclick="changeCounter('walls',1)">+</button>
         </div>
-        <div class="hint">Стены, выходящие на улицу</div>
+        <div class="hint">Стены, выходящие на улицу (у угловой комнаты — 2)</div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title"><span class="icon">🏗️</span> Тип здания и утепление</div>
+    <div class="section-label">Конструктив и остекление</div>
 
+    <div class="card">
+      <div class="card-title"><span class="icon">🏗️</span> Тип здания</div>
       <div class="form-group">
-        <label>Тип здания</label>
-        <select id="buildingType" onchange="updateBuildingHint()">
+        <label>Конструкция</label>
+        <select id="buildingType">
           <option value="1.0">Панельный / монолитный дом</option>
           <option value="0.85" selected>Кирпичный дом (2+ кирпича)</option>
           <option value="0.75">Хорошо утеплённый дом</option>
@@ -495,141 +482,201 @@
           <option value="0.6">Пассивный дом (A++)</option>
         </select>
       </div>
-
       <div class="form-group">
         <label>Качество окон</label>
         <select id="windowType">
-          <option value="1.0" selected>Стандартный двойной стеклопакет</option>
+          <option value="1.0" selected>Двойной стеклопакет (стандарт)</option>
           <option value="0.85">Тройной стеклопакет</option>
           <option value="1.15">Одинарное стекло / старые окна</option>
-          <option value="0.9">Двойной с тонировкой / аргон</option>
+          <option value="0.9">Двойной с аргоном / тонировкой</option>
         </select>
       </div>
-
       <div class="form-group">
         <label>Количество окон</label>
         <div class="counter">
-          <button class="counter-btn" onclick="changeCounter('windows', -1)">−</button>
-          <input type="number" id="windows" value="2" min="0" max="20" readonly />
-          <button class="counter-btn" onclick="changeCounter('windows', 1)">+</button>
+          <button class="counter-btn" onclick="changeCounter('windows',-1)">−</button>
+          <input type="number" id="windows" value="2" min="0" max="30" readonly />
+          <button class="counter-btn" onclick="changeCounter('windows',1)">+</button>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title"><span class="icon">🌍</span> Климатические условия</div>
+      <div class="card-title"><span class="icon">📍</span> Расположение</div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Перекрытие сверху</label>
+          <select id="ceiling">
+            <option value="1.0" selected>Отапл. этаж</option>
+            <option value="1.15">Холодный чердак</option>
+            <option value="1.08">Мансарда</option>
+            <option value="0.95">Тёплая кровля</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Перекрытие снизу</label>
+          <select id="floor">
+            <option value="1.0" selected>Отапл. этаж</option>
+            <option value="1.15">Холодный подвал</option>
+            <option value="1.05">Подполье</option>
+            <option value="0.95">Тёплый подвал</option>
+          </select>
+        </div>
+      </div>
+    </div>
 
+    <div class="section-label">Климат и температура</div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🌡️</span> Климатическая зона</div>
       <div class="form-group">
-        <label>Климатическая зона / город</label>
-        <select id="climate">
-          <option value="-5">Краснодар / Сочи (−5°C)</option>
-          <option value="-10">Ростов-на-Дону (−10°C)</option>
-          <option value="-15">Воронеж / Саратов (−15°C)</option>
-          <option value="-20">Москва / Нижний Новгород (−20°C)</option>
-          <option value="-25" selected>Казань / Самара (−25°C)</option>
-          <option value="-30">Уфа / Пермь / Екатеринбург (−30°C)</option>
-          <option value="-35">Омск / Новосибирск (−35°C)</option>
-          <option value="-40">Красноярск / Иркутск (−40°C)</option>
-          <option value="-50">Якутск / Магадан (−50°C)</option>
-          <option value="custom">Ввести вручную</option>
+        <label>Город / регион</label>
+        <select id="climate" onchange="onClimateChange()">
+          <option value="-5,2700">Краснодар / Сочи</option>
+          <option value="-10,2900">Ростов-на-Дону</option>
+          <option value="-15,3800">Воронеж / Саратов</option>
+          <option value="-20,4500">Москва / Нижний Новгород</option>
+          <option value="-25,5200" selected>Казань / Самара</option>
+          <option value="-30,5800">Уфа / Пермь / Екатеринбург</option>
+          <option value="-35,6200">Омск / Новосибирск</option>
+          <option value="-40,6800">Красноярск / Иркутск</option>
+          <option value="-50,7500">Якутск / Магадан</option>
+          <option value="custom,5000">Ввести вручную</option>
         </select>
       </div>
-
       <div class="form-group" id="customTempGroup" style="display:none">
-        <label>Расчётная температура наружного воздуха</label>
+        <label>Расчётная t наружного воздуха</label>
         <input type="number" id="customTemp" placeholder="-25" min="-60" max="0" step="1" inputmode="numeric" />
-        <div class="hint">°C (для самой холодной пятидневки)</div>
+        <div class="hint">°C (самая холодная пятидневка, СП 131.13330)</div>
       </div>
-
       <div class="form-group">
-        <label>Желаемая температура внутри</label>
+        <label>Температура в помещении</label>
         <div class="slider-wrap">
-          <input type="range" id="insideTemp" min="16" max="26" value="22" oninput="updateSlider(this, 'insideTempVal')" />
+          <input type="range" id="insideTemp" min="16" max="26" value="22" oninput="updateSlider(this,'insideTempVal')" />
           <span class="slider-val" id="insideTempVal">22°C</span>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title"><span class="icon">📍</span> Расположение помещения</div>
-
-      <div class="form-group">
-        <label>Перекрытие сверху</label>
-        <select id="ceiling">
-          <option value="1.0" selected>Отапливаемый этаж</option>
-          <option value="1.15">Чердак / холодный чердак</option>
-          <option value="1.08">Мансарда (утеплённая)</option>
-          <option value="0.95">Тёплая кровля</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Перекрытие снизу</label>
-        <select id="floor">
-          <option value="1.0" selected>Отапливаемый этаж</option>
-          <option value="1.15">Холодный подвал / грунт</option>
-          <option value="1.05">Вентилируемое подполье</option>
-          <option value="0.95">Тёплый подвал</option>
-        </select>
-      </div>
-    </div>
+    <div class="section-label">Вентиляция</div>
 
     <div class="card">
-      <div class="card-title"><span class="icon">💨</span> Вентиляция</div>
-
+      <div class="card-title"><span class="icon">💨</span> Тип вентиляции</div>
       <div class="form-group">
-        <label>Тип вентиляции</label>
         <select id="ventType">
           <option value="0">Естественная (инфильтрация учтена)</option>
           <option value="0.05">Приточная без рекуперации</option>
-          <option value="0.02">С рекуператором (70%)</option>
+          <option value="0.02">С рекуператором (КПД 70%)</option>
           <option value="0.08">Принудительная без подогрева</option>
         </select>
       </div>
     </div>
 
-    <button class="calc-btn" onclick="calculate()">🧮 Рассчитать тепловую нагрузку</button>
+    <div class="section-label">Тип отопления и топливо</div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔥</span> Источник тепла</div>
+      <div class="form-group">
+        <label>Вид топлива / оборудование</label>
+        <div class="chips" id="fuelChips">
+          <button class="chip active" data-fuel="gas"      onclick="selectFuel(this)">⛽ Газ</button>
+          <button class="chip"        data-fuel="elec"     onclick="selectFuel(this)">⚡ Электро</button>
+          <button class="chip"        data-fuel="hp"       onclick="selectFuel(this)">♻️ Тепл. насос</button>
+          <button class="chip"        data-fuel="pellets"  onclick="selectFuel(this)">🪵 Пеллеты</button>
+          <button class="chip"        data-fuel="diesel"   onclick="selectFuel(this)">🛢️ Дизель</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Цена топлива <span style="font-size:0.7rem;color:var(--primary)" id="fuelUnitLabel">(руб/м³)</span></label>
+        <input type="number" id="fuelPrice" placeholder="7" min="0" step="0.5" inputmode="decimal" />
+        <div class="hint" id="fuelPriceHint">Введите стоимость для расчёта расходов за сезон</div>
+      </div>
+    </div>
+
+    <div class="section-label">Дополнительно</div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🏠</span> Тип помещения</div>
+      <div class="form-group">
+        <label>Назначение</label>
+        <select id="roomType">
+          <option value="1.0" selected>Жилая комната</option>
+          <option value="0.9">Кухня</option>
+          <option value="1.1">Ванная / санузел</option>
+          <option value="0.85">Офис / коммерция</option>
+          <option value="1.15">Угловая / торцевая</option>
+          <option value="0.7">Кладовая / техпомещение</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Людей в помещении (тепловыделения)</label>
+        <div class="counter">
+          <button class="counter-btn" onclick="changeCounter('people',-1)">−</button>
+          <input type="number" id="people" value="2" min="0" max="50" readonly />
+          <button class="counter-btn" onclick="changeCounter('people',1)">+</button>
+        </div>
+        <div class="hint">~120 Вт тепловыделений на человека (вычитается из нагрузки)</div>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calculate()">🌿 Рассчитать тепловую нагрузку</button>
     <button class="reset-btn" onclick="resetForm()">↺ Сбросить всё</button>
   </div>
 
-  <!-- TAB CONTENT: RESULT -->
+  <!-- ═══════════════════ TAB: РЕЗУЛЬТАТ ═══════════════════ -->
   <div class="tab-content" id="tab-result">
     <div id="resultContent">
       <div class="empty-state">
-        <div class="icon">🧮</div>
+        <div class="icon">🌿</div>
         <p>Заполните параметры во вкладке<br><strong>«Расчёт»</strong> и нажмите кнопку<br>«Рассчитать тепловую нагрузку»</p>
       </div>
     </div>
   </div>
 
-  <!-- TAB CONTENT: INFO -->
+  <!-- ═══════════════════ TAB: СПРАВКА ═══════════════════ -->
   <div class="tab-content" id="tab-info">
+
     <div class="card">
-      <div class="card-title"><span class="icon">📖</span> О методике расчёта</div>
-      <p style="font-size:0.82rem;line-height:1.7;color:var(--text-muted);">
-        Расчёт выполняется по укрупнённому методу, основанному на удельной тепловой характеристике здания
-        согласно <strong>СП 60.13330.2020</strong> (Отопление, вентиляция и кондиционирование воздуха).
+      <div class="card-title"><span class="icon">📖</span> Методика расчёта</div>
+      <p style="font-size:0.82rem;line-height:1.75;color:var(--text-muted);">
+        Расчёт выполняется по укрупнённому методу на основе удельной тепловой характеристики здания
+        согласно <strong style="color:var(--primary-dark)">СП 60.13330.2020</strong>.
       </p>
       <br>
-      <p style="font-size:0.82rem;line-height:1.7;color:var(--text-muted);">
-        Формула: <strong>Q = q₀ · V · (t<sub>в</sub> − t<sub>н</sub>) · K</strong>, где K — суммарный
-        коэффициент, учитывающий тип конструкций, ориентацию, расположение, остекление и вентиляцию.
+      <div style="background:var(--primary-faint);border-radius:var(--radius-sm);padding:12px;font-size:0.82rem;line-height:1.7;color:var(--primary-dark);font-weight:600;">
+        Q = q₀ · V · (t<sub>в</sub> − t<sub>н</sub>) · K
+      </div>
+      <p style="font-size:0.78rem;line-height:1.65;color:var(--text-muted);margin-top:10px;">
+        Где K — суммарный поправочный коэффициент: тип конструкций, ориентация, остекление, расположение, вентиляция, тип помещения.
       </p>
     </div>
 
     <div class="card">
       <div class="card-title"><span class="icon">📊</span> Ориентировочные нормы</div>
       <table class="info-table">
-        <thead>
-          <tr><th>Помещение</th><th>Норма</th></tr>
-        </thead>
+        <thead><tr><th>Помещение</th><th>Норма, Вт/м²</th></tr></thead>
         <tbody>
-          <tr><td>Жилая комната</td><td><span class="badge badge-blue">70–100 Вт/м²</span></td></tr>
-          <tr><td>Кухня</td><td><span class="badge badge-green">50–75 Вт/м²</span></td></tr>
-          <tr><td>Ванная / санузел</td><td><span class="badge badge-orange">100–120 Вт/м²</span></td></tr>
-          <tr><td>Угловая комната</td><td><span class="badge badge-orange">100–130 Вт/м²</span></td></tr>
-          <tr><td>Офис</td><td><span class="badge badge-blue">60–90 Вт/м²</span></td></tr>
-          <tr><td>Производство</td><td><span class="badge badge-blue">50–70 Вт/м²</span></td></tr>
+          <tr><td>Жилая комната</td><td><span class="badge badge-green">70–100</span></td></tr>
+          <tr><td>Кухня</td><td><span class="badge badge-lime">50–75</span></td></tr>
+          <tr><td>Ванная / санузел</td><td><span class="badge badge-orange">100–120</span></td></tr>
+          <tr><td>Угловая комната</td><td><span class="badge badge-orange">100–130</span></td></tr>
+          <tr><td>Офис</td><td><span class="badge badge-green">60–90</span></td></tr>
+          <tr><td>Производство</td><td><span class="badge badge-green">50–70</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔥</span> КПД оборудования</div>
+      <table class="info-table">
+        <thead><tr><th>Тип</th><th>КПД / COP</th></tr></thead>
+        <tbody>
+          <tr><td>⛽ Газовый котёл (конд.)</td><td>95–109%</td></tr>
+          <tr><td>⛽ Газовый котёл (обыч.)</td><td>88–92%</td></tr>
+          <tr><td>⚡ Электрокотёл</td><td>99%</td></tr>
+          <tr><td>♻️ Тепловой насос</td><td>COP 2.5–4.5</td></tr>
+          <tr><td>🪵 Пеллетный котёл</td><td>80–85%</td></tr>
+          <tr><td>🛢️ Дизельный котёл</td><td>86–92%</td></tr>
         </tbody>
       </table>
     </div>
@@ -637,15 +684,29 @@
     <div class="card">
       <div class="card-title"><span class="icon">🏠</span> Типовые мощности котлов</div>
       <table class="info-table">
-        <thead>
-          <tr><th>Площадь дома</th><th>Мощность котла</th></tr>
-        </thead>
+        <thead><tr><th>Площадь дома</th><th>Мощность</th></tr></thead>
         <tbody>
           <tr><td>до 100 м²</td><td>до 10 кВт</td></tr>
-          <tr><td>100 – 200 м²</td><td>10 – 20 кВт</td></tr>
-          <tr><td>200 – 300 м²</td><td>20 – 30 кВт</td></tr>
-          <tr><td>300 – 500 м²</td><td>30 – 50 кВт</td></tr>
-          <tr><td>более 500 м²</td><td>расчёт инд.</td></tr>
+          <tr><td>100–200 м²</td><td>10–20 кВт</td></tr>
+          <tr><td>200–300 м²</td><td>20–30 кВт</td></tr>
+          <tr><td>300–500 м²</td><td>30–50 кВт</td></tr>
+          <tr><td>> 500 м²</td><td>индивидуальный расчёт</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🌿</span> Класс энергоэффективности</div>
+      <table class="info-table">
+        <thead><tr><th>Класс</th><th>кВтч/м²/год</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge" style="background:#006400;color:#fff">A++</span></td><td>< 30</td></tr>
+          <tr><td><span class="badge" style="background:#008000;color:#fff">A+</span></td><td>30–50</td></tr>
+          <tr><td><span class="badge" style="background:#3cb371;color:#fff">A</span></td><td>50–75</td></tr>
+          <tr><td><span class="badge" style="background:#9acd32;color:#333">B</span></td><td>75–100</td></tr>
+          <tr><td><span class="badge" style="background:#ffd700;color:#333">C</span></td><td>100–150</td></tr>
+          <tr><td><span class="badge" style="background:#ff8c00;color:#fff">D</span></td><td>150–200</td></tr>
+          <tr><td><span class="badge" style="background:#ff4500;color:#fff">E–G</span></td><td>> 200</td></tr>
         </tbody>
       </table>
     </div>
@@ -655,18 +716,19 @@
       <div class="rec-card warn">
         <span class="rec-icon">📌</span>
         <div class="rec-text">
-          <strong>Расчёт — приблизительный</strong>
-          Для проектирования систем отопления необходим точный теплотехнический расчёт по ГОСТ и СП с учётом фактических материалов стен.
+          <strong>Расчёт — укрупнённый</strong>
+          Для проектирования необходим точный теплотехнический расчёт по ГОСТ и СП с учётом фактических материалов.
         </div>
       </div>
       <div class="rec-card info">
         <span class="rec-icon">💡</span>
         <div class="rec-text">
           <strong>Запас мощности</strong>
-          Рекомендуется выбирать оборудование с запасом 15–25% от расчётной нагрузки.
+          Выбирайте оборудование с запасом 15–25% от расчётной нагрузки.
         </div>
       </div>
     </div>
+
   </div>
 
 </main>
@@ -674,50 +736,66 @@
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="nav-btn active" id="nav-calc" onclick="switchTab('calc')">
-    <span class="nav-icon">🧮</span>
+    <div class="nav-icon-wrap"><span class="nav-icon">🧮</span></div>
     <span>Расчёт</span>
   </button>
   <button class="nav-btn" id="nav-result" onclick="switchTab('result')">
-    <span class="nav-icon">📊</span>
+    <div class="nav-icon-wrap"><span class="nav-icon">📊</span></div>
     <span>Результат</span>
   </button>
   <button class="nav-btn" id="nav-info" onclick="switchTab('info')">
-    <span class="nav-icon">📖</span>
+    <div class="nav-icon-wrap"><span class="nav-icon">📖</span></div>
     <span>Справка</span>
   </button>
 </nav>
 
 <script>
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function $(id) { return document.getElementById(id); }
 
 function changeCounter(id, delta) {
   const el = $(id);
-  const min = parseInt(el.min ?? 0);
-  const max = parseInt(el.max ?? 99);
-  el.value = Math.min(max, Math.max(min, parseInt(el.value || 0) + delta));
+  el.value = Math.min(+el.max||99, Math.max(+el.min||0, (+el.value||0) + delta));
 }
 
 function updateSlider(el, valId) {
-  const min = parseFloat(el.min), max = parseFloat(el.max), val = parseFloat(el.value);
-  const pct = ((val - min) / (max - min) * 100).toFixed(1) + '%';
+  const pct = ((+el.value - +el.min) / (+el.max - +el.min) * 100).toFixed(1) + '%';
   el.style.setProperty('--pct', pct);
-  $(valId).textContent = val + '°C';
+  $(valId).textContent = el.value + '°C';
 }
-
-function updateBuildingHint() {}
-
-// Climate dropdown → show/hide custom input
-$('climate').addEventListener('change', function () {
-  $('customTempGroup').style.display = this.value === 'custom' ? '' : 'none';
-});
-
-// Init slider
 updateSlider($('insideTemp'), 'insideTempVal');
 
-// ── Tab switching ─────────────────────────────────────────────────────────────
+// Climate
+function onClimateChange() {
+  $('customTempGroup').style.display = $('climate').value.startsWith('custom') ? '' : 'none';
+}
+function getOutdoorData() {
+  const v = $('climate').value;
+  if (v.startsWith('custom')) return { tOut: +($('customTemp').value)||−25, hdd: 5000 };
+  const [t, hdd] = v.split(',');
+  return { tOut: +t, hdd: +hdd };
+}
 
+// Fuel
+const FUEL_META = {
+  gas:     { unit: 'руб/м³',   label: '⛽ Природный газ',   hv: 9.5,  eff: 0.90, unitName: 'м³',    icon: '⛽' },
+  elec:    { unit: 'руб/кВтч', label: '⚡ Электрокотёл',    hv: 1.0,  eff: 0.99, unitName: 'кВтч',  icon: '⚡' },
+  hp:      { unit: 'руб/кВтч', label: '♻️ Тепловой насос',  hv: 1.0,  eff: 3.0,  unitName: 'кВтч',  icon: '♻️' },
+  pellets: { unit: 'руб/кг',   label: '🪵 Пеллеты',          hv: 4.7,  eff: 0.82, unitName: 'кг',    icon: '🪵' },
+  diesel:  { unit: 'руб/л',    label: '🛢️ Дизель',           hv: 10.0, eff: 0.88, unitName: 'л',     icon: '🛢️' },
+};
+let currentFuel = 'gas';
+
+function selectFuel(btn) {
+  document.querySelectorAll('#fuelChips .chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  currentFuel = btn.dataset.fuel;
+  const m = FUEL_META[currentFuel];
+  $('fuelUnitLabel').textContent = '(' + m.unit + ')';
+  $('fuelPriceHint').textContent = 'Стоимость единицы топлива (' + m.unit + ')';
+}
+
+// Tabs
 function switchTab(name) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
@@ -725,73 +803,61 @@ function switchTab(name) {
   $('nav-' + name).classList.add('active');
 }
 
-// ── Main calculation ──────────────────────────────────────────────────────────
-
-function getOutdoorTemp() {
-  const sel = $('climate');
-  if (sel.value === 'custom') {
-    return parseFloat($('customTemp').value) || -25;
-  }
-  return parseFloat(sel.value);
-}
-
+// ── Calculate ─────────────────────────────────────────────────────────────────
 function calculate() {
-  const area = parseFloat($('area').value);
-  const h = parseFloat($('height').value);
-
+  const area = +$('area').value;
+  const h    = +$('height').value;
   if (!area || area <= 0) { showError('Укажите площадь помещения'); return; }
-  if (!h || h <= 0)       { showError('Укажите высоту потолков'); return; }
+  if (!h    || h    <= 0) { showError('Укажите высоту потолков');    return; }
 
-  const V = area * h; // объём, м³
-
-  // Коэффициенты
-  const kBuilding  = parseFloat($('buildingType').value);
-  const kWindow    = parseFloat($('windowType').value);
-  const kCeiling   = parseFloat($('ceiling').value);
-  const kFloor     = parseFloat($('floor').value);
-  const kVent      = parseFloat($('ventType').value);
-
-  const walls   = parseInt($('walls').value);
-  const windows = parseInt($('windows').value);
-
-  const tIn  = parseFloat($('insideTemp').value);
-  const tOut = getOutdoorTemp();
+  const V = area * h;
+  const { tOut, hdd } = getOutdoorData();
+  const tIn  = +$('insideTemp').value;
   const dT   = tIn - tOut;
 
-  // Базовая удельная характеристика (Вт/м³·°C) — среднее по СП
+  const kBuilding = +$('buildingType').value;
+  const kWindow   = +$('windowType').value;
+  const kCeiling  = +$('ceiling').value;
+  const kFloor    = +$('floor').value;
+  const kVent     = +$('ventType').value;
+  const kRoom     = +$('roomType').value;
+  const walls     = +$('walls').value;
+  const windows   = +$('windows').value;
+  const people    = +$('people').value;
+
   const q0 = 0.45;
-
-  // Поправка на наружные стены (каждая +8%)
-  const kWalls = 1 + (walls - 1) * 0.08;
-
-  // Поправка на окна: каждое окно ~+5% к базе
+  const kWalls   = 1 + Math.max(0, walls - 1) * 0.08;
   const kWindows = 1 + windows * 0.05;
+  const K = kBuilding * kWindow * kCeiling * kFloor * kWalls * kWindows * kRoom * (1 + kVent);
 
-  // Итоговый коэффициент
-  const K = kBuilding * kWindow * kCeiling * kFloor * kWalls * kWindows * (1 + kVent);
+  const Q_raw    = q0 * V * dT * K;
+  const Q_people = people * 120;            // Вт тепловыделений
+  const Q_net    = Math.max(0, Q_raw * 1.10 - Q_people);
+  const Q_kW     = Q_net / 1000;
+  const qSpec    = Q_net / area;
 
-  // Тепловая нагрузка, Вт
-  const Q_W = q0 * V * dT * K;
+  // Fuel & season
+  const fuel = FUEL_META[currentFuel];
+  const seasonHours = hdd / (tIn - tOut + 0.001) * 24;  // Упрощённая оценка сезонных часов
+  const Q_season_kWh = Q_kW * seasonHours * 0.55;        // Средний коэффициент нагрузки
+  const fuelPerSeason = Q_season_kWh / (fuel.hv * fuel.eff);
+  const fuelPrice = +$('fuelPrice').value || 0;
+  const seasonCost = fuelPrice > 0 ? fuelPerSeason * fuelPrice : null;
 
-  // Добавляем запас 10% на инфильтрацию и неучтённые потери
-  const Q_total_W = Q_W * 1.10;
-  const Q_kW = Q_total_W / 1000;
-  const Q_BTU = Q_total_W * 3.412;
-  const Q_kcal = Q_total_W * 0.86;
-  const qSpec = Q_total_W / area; // Вт/м²
+  // Energy class
+  const kWhPerM2 = Q_season_kWh / area;
 
   displayResult({
-    Q_kW, Q_BTU, Q_kcal, qSpec,
-    area, V, dT, tIn, tOut, walls, windows,
-    kBuilding, kWindow, kCeiling, kFloor, kWalls, kWindows, kVent
+    Q_kW, qSpec, Q_net,
+    area, V, dT, tIn, tOut, walls, windows, people,
+    kBuilding, kWindow, kCeiling, kFloor, kWalls, kWindows, kVent,
+    fuelPerSeason, fuel, seasonCost, kWhPerM2, Q_season_kWh, hdd
   });
-
   switchTab('result');
 }
 
 function showError(msg) {
-  const rc = $('resultContent');
-  rc.innerHTML = `
+  $('resultContent').innerHTML = `
     <div class="rec-card warn animate" style="margin-top:16px">
       <span class="rec-icon">❌</span>
       <div class="rec-text"><strong>Ошибка ввода</strong>${msg}</div>
@@ -799,45 +865,89 @@ function showError(msg) {
   switchTab('result');
 }
 
+// ── Display ───────────────────────────────────────────────────────────────────
 function displayResult(r) {
-  const kW = r.Q_kW.toFixed(2);
-  const btu = Math.round(r.Q_BTU);
-  const kcal = Math.round(r.Q_kcal);
+  const kW    = r.Q_kW.toFixed(2);
   const qSpec = Math.round(r.qSpec);
+  const btu   = Math.round(r.Q_net * 3.412);
+  const kcal  = Math.round(r.Q_net * 0.86);
 
-  // Рекомендации
-  const recs = getRecommendations(r);
-
-  // Категория нагрузки
   let loadLabel = '', loadClass = '';
-  if (r.qSpec < 70) { loadLabel = 'Низкая нагрузка'; loadClass = 'badge-green'; }
-  else if (r.qSpec < 110) { loadLabel = 'Умеренная нагрузка'; loadClass = 'badge-blue'; }
-  else if (r.qSpec < 150) { loadLabel = 'Высокая нагрузка'; loadClass = 'badge-orange'; }
-  else { loadLabel = 'Очень высокая'; loadClass = 'badge-orange'; }
+  if (r.qSpec < 70)       { loadLabel = 'Низкая нагрузка';   loadClass = 'badge-green'; }
+  else if (r.qSpec < 110) { loadLabel = 'Умеренная нагрузка';loadClass = 'badge-lime'; }
+  else if (r.qSpec < 150) { loadLabel = 'Высокая нагрузка';  loadClass = 'badge-orange'; }
+  else                    { loadLabel = 'Очень высокая';      loadClass = 'badge-red'; }
 
-  // Прогресс бар (max ~200 Вт/м²)
   const pct = Math.min(100, (r.qSpec / 200 * 100)).toFixed(0);
-
-  // Рекомендуемый котёл (+20% запас)
   const boilerKW = (r.Q_kW * 1.2).toFixed(1);
 
-  // Секции потерь (приблизительно)
-  const wallLoss   = (r.Q_kW * 0.35 * r.kBuilding / 0.85).toFixed(2);
-  const windowLoss = (r.Q_kW * 0.20 * r.kWindow).toFixed(2);
-  const ceilLoss   = (r.Q_kW * 0.15 * r.kCeiling).toFixed(2);
-  const floorLoss  = (r.Q_kW * 0.10 * r.kFloor).toFixed(2);
-  const ventLoss   = (r.Q_kW * 0.20 * (1 + r.kVent * 5)).toFixed(2);
+  // Loss breakdown (proportional)
+  const losses = [
+    { icon:'🧱', label:'Стены',         kw: r.Q_kW * 0.35 * r.kBuilding / 0.85 },
+    { icon:'🪟', label:'Окна',          kw: r.Q_kW * 0.20 * r.kWindow },
+    { icon:'🏠', label:'Кровля/потолок',kw: r.Q_kW * 0.15 * r.kCeiling },
+    { icon:'🪵', label:'Пол',           kw: r.Q_kW * 0.10 * r.kFloor },
+    { icon:'💨', label:'Вентиляция',    kw: r.Q_kW * 0.20 * (1 + r.kVent * 5) },
+  ];
+  const maxLoss = Math.max(...losses.map(l => l.kw));
+
+  // Radiators (standard radiator section ~180W at dt70, ~120W at dt50)
+  const dtRad = Math.min(70, r.dT * 0.85);
+  const wPerSection = dtRad >= 60 ? 180 : dtRad >= 45 ? 140 : 110;
+  const sectionsNeeded = Math.ceil(r.Q_net / wPerSection);
+  const radiatorsStd   = Math.ceil(sectionsNeeded / 8);
+  const sectionsPerRad = Math.ceil(sectionsNeeded / Math.max(1, radiatorsStd));
+
+  // Energy class
+  const eClasses = [
+    { cls:'A++', color:'#006400', max:30 },
+    { cls:'A+',  color:'#008000', max:50 },
+    { cls:'A',   color:'#3cb371', max:75 },
+    { cls:'B',   color:'#9acd32', max:100 },
+    { cls:'C',   color:'#ffd700', max:150 },
+    { cls:'D',   color:'#ff8c00', max:200 },
+    { cls:'E',   color:'#ff4500', max:260 },
+    { cls:'F',   color:'#cc2200', max:350 },
+    { cls:'G',   color:'#990000', max:Infinity },
+  ];
+  let activeClass = eClasses[eClasses.length-1];
+  for (const ec of eClasses) { if (r.kWhPerM2 < ec.max) { activeClass = ec; break; } }
+
+  const eClassHTML = eClasses.map(ec => {
+    const isActive = ec.cls === activeClass.cls;
+    const barW = Math.min(100, 20 + (350 - Math.min(ec.max, 350)) / 350 * 80).toFixed(0);
+    return `<div class="eclass-row ${isActive ? 'active' : ''}">
+      <div class="eclass-badge" style="background:${ec.color}">${ec.cls}</div>
+      <div class="eclass-bar ${isActive ? 'active' : ''}" style="width:${barW}%;background:${ec.color}"></div>
+      <span class="eclass-row-label">${ec.cls}</span>
+      <span class="eclass-arrow">◀ ${Math.round(r.kWhPerM2)} кВтч/м²</span>
+    </div>`;
+  }).join('');
+
+  // Fuel widget
+  const fuelSeasonFmt = r.fuelPerSeason > 1000
+    ? (r.fuelPerSeason/1000).toFixed(1) + ' т' : Math.round(r.fuelPerSeason) + ' ' + r.fuel.unitName;
+  const fuelMonthFmt = Math.round(r.fuelPerSeason / 6) + ' ' + r.fuel.unitName;
+
+  const costHTML = r.seasonCost
+    ? `<div class="cost-total">
+         <div class="cost-total-label">Стоимость сезона отопления (~6 мес)</div>
+         <div class="cost-total-val">${Math.round(r.seasonCost).toLocaleString('ru-RU')} ₽</div>
+         <div class="cost-total-unit">~${Math.round(r.seasonCost/6).toLocaleString('ru-RU')} ₽ / месяц</div>
+       </div>` : '';
 
   $('resultContent').innerHTML = `
-    <div class="result-card animate">
+    <!-- HERO -->
+    <div class="result-hero animate">
       <div class="result-label">Расчётная тепловая нагрузка</div>
       <div class="result-value">${kW}<span class="result-unit">кВт</span></div>
-      <div class="result-sub">${btu.toLocaleString()} BTU/ч · ${kcal.toLocaleString()} ккал/ч</div>
+      <div class="result-sub">${btu.toLocaleString('ru-RU')} BTU/ч · ${kcal.toLocaleString('ru-RU')} ккал/ч</div>
       <div class="result-sub" style="margin-top:8px">
-        <span class="badge ${loadClass}" style="font-size:0.78rem;padding:4px 10px">${loadLabel}</span>
+        <span class="badge ${loadClass}" style="font-size:0.78rem;padding:4px 12px">${loadLabel}</span>
       </div>
     </div>
 
+    <!-- KEY METRICS -->
     <div class="result-grid animate">
       <div class="result-item">
         <div class="result-item-label">Удельная нагрузка</div>
@@ -845,9 +955,9 @@ function displayResult(r) {
         <div class="result-item-unit">Вт/м²</div>
       </div>
       <div class="result-item">
-        <div class="result-item-label">Рекомендуемый котёл</div>
+        <div class="result-item-label">Котёл (запас +20%)</div>
         <div class="result-item-value">${boilerKW}</div>
-        <div class="result-item-unit">кВт (с запасом 20%)</div>
+        <div class="result-item-unit">кВт</div>
       </div>
       <div class="result-item">
         <div class="result-item-label">Объём помещения</div>
@@ -857,38 +967,107 @@ function displayResult(r) {
       <div class="result-item">
         <div class="result-item-label">Перепад температур</div>
         <div class="result-item-value">${r.dT}</div>
-        <div class="result-item-unit">°C (${r.tIn}° → ${r.tOut}°)</div>
+        <div class="result-item-unit">°C (${r.tIn}°→${r.tOut}°)</div>
       </div>
     </div>
 
+    <!-- PROGRESS BAR -->
     <div class="card animate">
-      <div class="card-title"><span class="icon">📉</span> Нагрузка по удельной норме</div>
-      <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-muted);margin-bottom:4px">
+      <div class="card-title"><span class="icon">📉</span> Удельная тепловая нагрузка</div>
+      <div style="display:flex;justify-content:space-between;font-size:0.73rem;color:var(--text-muted);margin-bottom:4px">
         <span>0</span><span>100 Вт/м²</span><span>200 Вт/м²</span>
       </div>
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" style="width:${pct}%"></div>
       </div>
-      <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px;text-align:right">${qSpec} Вт/м²</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+        <span class="badge ${loadClass}">${loadLabel}</span>
+        <span style="font-size:0.8rem;font-weight:700;color:var(--primary-dark)">${qSpec} Вт/м²</span>
+      </div>
     </div>
 
+    <!-- ENERGY CLASS -->
+    <div class="card animate">
+      <div class="card-title"><span class="icon">🌿</span> Класс энергоэффективности</div>
+      <div class="eclass-scale">${eClassHTML}</div>
+      <div style="margin-top:10px;font-size:0.78rem;color:var(--text-muted);">
+        Потребление: <strong style="color:var(--primary-dark)">${Math.round(r.kWhPerM2)} кВтч/м²/год</strong>
+        · класс <strong style="color:${activeClass.color}">${activeClass.cls}</strong>
+      </div>
+    </div>
+
+    <!-- HEAT LOSS BARS -->
     <div class="card animate">
       <div class="card-title"><span class="icon">🔍</span> Структура тепловых потерь</div>
-      <table class="info-table">
-        <thead><tr><th>Источник потерь</th><th>Вклад</th></tr></thead>
-        <tbody>
-          <tr><td>🧱 Стены и ограждения</td><td>${wallLoss} кВт</td></tr>
-          <tr><td>🪟 Окна и остекление</td><td>${windowLoss} кВт</td></tr>
-          <tr><td>🏠 Кровля / потолок</td><td>${ceilLoss} кВт</td></tr>
-          <tr><td>🪵 Пол / перекрытие</td><td>${floorLoss} кВт</td></tr>
-          <tr><td>💨 Вентиляция</td><td>${ventLoss} кВт</td></tr>
-        </tbody>
-      </table>
+      ${losses.map(l => `
+        <div class="loss-row">
+          <span class="loss-icon">${l.icon}</span>
+          <span class="loss-label">${l.label}</span>
+          <div class="loss-bar-wrap">
+            <div class="loss-bar-fill" style="width:${(l.kw/maxLoss*100).toFixed(0)}%"></div>
+          </div>
+          <span class="loss-kw">${l.kw.toFixed(2)} кВт</span>
+        </div>`).join('')}
     </div>
 
+    <!-- RADIATORS -->
+    <div class="card animate">
+      <div class="card-title"><span class="icon">🔲</span> Радиаторы отопления</div>
+      <div class="rad-grid">
+        <div class="rad-item">
+          <span class="rad-icon">🏠</span>
+          <div class="rad-val">${radiatorsStd}</div>
+          <div class="rad-label">радиаторов</div>
+        </div>
+        <div class="rad-item">
+          <span class="rad-icon">🔩</span>
+          <div class="rad-val">${sectionsNeeded}</div>
+          <div class="rad-label">секций итого</div>
+        </div>
+        <div class="rad-item">
+          <span class="rad-icon">📐</span>
+          <div class="rad-val">${sectionsPerRad}</div>
+          <div class="rad-label">секций/радиатор</div>
+        </div>
+      </div>
+      <div class="hint" style="margin-top:10px">Стандартная секция ~${wPerSection} Вт при ΔT=${Math.round(r.dT*0.85)}°C · межосевое 500 мм</div>
+    </div>
+
+    <!-- FUEL / SEASON -->
+    <div class="card animate">
+      <div class="card-title"><span class="icon">${r.fuel.icon}</span> Расход топлива за сезон</div>
+      ${costHTML}
+      <div class="fuel-grid">
+        <div class="fuel-item">
+          <span class="fuel-item-icon">📅</span>
+          <div class="fuel-item-val">${fuelSeasonFmt}</div>
+          <div class="fuel-item-label">за сезон (~6 мес)</div>
+        </div>
+        <div class="fuel-item">
+          <span class="fuel-item-icon">🗓️</span>
+          <div class="fuel-item-val">${fuelMonthFmt}</div>
+          <div class="fuel-item-label">в месяц (ср.)</div>
+        </div>
+        <div class="fuel-item">
+          <span class="fuel-item-icon">⚡</span>
+          <div class="fuel-item-val">${Math.round(r.Q_season_kWh).toLocaleString('ru-RU')}</div>
+          <div class="fuel-item-val"><span style="font-size:0.7rem;font-weight:500">кВтч/сезон</span></div>
+          <div class="fuel-item-label">тепловая энергия</div>
+        </div>
+        <div class="fuel-item">
+          <span class="fuel-item-icon">🌡️</span>
+          <div class="fuel-item-val">${r.hdd}</div>
+          <div class="fuel-item-val"><span style="font-size:0.7rem;font-weight:500">°C·сут</span></div>
+          <div class="fuel-item-label">градусо-сутки</div>
+        </div>
+      </div>
+      ${!r.seasonCost ? '<p style="margin-top:10px;font-size:0.78rem;color:var(--text-muted)">💡 Введите цену топлива в «Расчёте», чтобы увидеть стоимость сезона</p>' : ''}
+    </div>
+
+    <!-- RECOMMENDATIONS -->
     <div class="card animate">
       <div class="card-title"><span class="icon">✅</span> Рекомендации</div>
-      ${recs}
+      ${getRecommendations(r)}
     </div>
 
     <button class="share-btn" onclick="shareResult(${kW}, ${qSpec})">📤 Поделиться результатом</button>
@@ -898,44 +1077,28 @@ function displayResult(r) {
 
 function getRecommendations(r) {
   const items = [];
-
   if (r.qSpec > 130) {
-    items.push(['warn', '🌡️', 'Высокие удельные потери', 'Рекомендуется улучшить теплоизоляцию стен и заменить окна на энергоэффективные.']);
+    items.push(['warn','🌡️','Высокие удельные потери','Рекомендуется улучшить теплоизоляцию стен и заменить окна на энергоэффективные.']);
   } else if (r.qSpec < 60) {
-    items.push(['ok', '🎉', 'Отличное утепление', 'Помещение хорошо утеплено. Возможно использование тепловых насосов или инфракрасного отопления.']);
+    items.push(['ok','🎉','Отличное утепление','Помещение хорошо утеплено. Подходит тепловой насос или инфракрасное отопление.']);
   } else {
-    items.push(['info', '👍', 'Нормальные теплопотери', 'Параметры в пределах нормы для данного климата.']);
+    items.push(['info','👍','Нормальные теплопотери','Параметры в пределах нормы для данного климата.']);
   }
-
-  if (r.kWindow > 1.1) {
-    items.push(['warn', '🪟', 'Замените окна', 'Старое или одинарное остекление даёт до 30% теплопотерь. Двойной стеклопакет с аргоном снизит нагрузку.']);
-  }
-
-  if (r.walls >= 3) {
-    items.push(['warn', '🏠', 'Угловое помещение', 'При трёх и более наружных стенах нагрузка значительно возрастает. Утепление фасада особенно важно.']);
-  }
-
-  if (r.kCeiling > 1.1) {
-    items.push(['info', '🏠', 'Утеплите чердак', 'Потолочное перекрытие над неотапливаемым чердаком — значимый источник теплопотерь.']);
-  }
-
-  if (r.kFloor > 1.1) {
-    items.push(['info', '🪵', 'Теплоизоляция пола', 'Холодный подвал или грунт требует утепления пола первого этажа.']);
-  }
-
-  if (r.dT > 50) {
-    items.push(['warn', '❄️', 'Суровый климат', `Перепад температур ${r.dT}°C. Рекомендуется двухконтурное отопление с резервным котлом.`]);
-  }
-
-  return items.map(([type, icon, title, text]) => `
-    <div class="rec-card ${type}">
-      <span class="rec-icon">${icon}</span>
-      <div class="rec-text"><strong>${title}</strong>${text}</div>
+  if (r.kWindow > 1.1) items.push(['warn','🪟','Замените окна','Старое остекление — до 30% потерь. Двойной стеклопакет с аргоном снизит нагрузку.']);
+  if (r.walls >= 3)    items.push(['warn','🏠','Угловое помещение','3+ наружных стены — нагрузка значительно выше нормы. Утепление фасада обязательно.']);
+  if (r.kCeiling > 1.1) items.push(['info','🏠','Утеплите чердак','Перекрытие над холодным чердаком — значимый источник потерь.']);
+  if (r.kFloor > 1.1)   items.push(['info','🪵','Утеплите пол','Холодный подвал / грунт требует утепления пола первого этажа.']);
+  if (r.dT > 50)        items.push(['warn','❄️','Суровый климат',`Перепад ${r.dT}°C. Рекомендуется резервный источник тепла.`]);
+  if (r.people > 4)     items.push(['ok','👥','Тепловыделения людей',`${r.people} чел. отдают ~${r.people*120} Вт тепла — это учтено в расчёте.`]);
+  return items.map(([t,i,ti,tx]) => `
+    <div class="rec-card ${t}">
+      <span class="rec-icon">${i}</span>
+      <div class="rec-text"><strong>${ti}</strong>${tx}</div>
     </div>`).join('');
 }
 
 async function shareResult(kW, qSpec) {
-  const text = `🌡️ Тепловая нагрузка: ${kW} кВт (${qSpec} Вт/м²)\nРассчитано на: ${location.href}`;
+  const text = `🌿 Тепловая нагрузка: ${kW} кВт (${qSpec} Вт/м²)\nРассчитано на: ${location.href}`;
   if (navigator.share) {
     try { await navigator.share({ title: 'Тепловая нагрузка', text }); } catch (_) {}
   } else if (navigator.clipboard) {
@@ -945,22 +1108,20 @@ async function shareResult(kW, qSpec) {
 }
 
 function resetForm() {
-  $('area').value = '';
-  $('height').value = '';
-  $('walls').value = 1;
-  $('windows').value = 2;
-  $('buildingType').value = '0.85';
-  $('windowType').value = '1.0';
-  $('climate').value = '-25';
-  $('customTempGroup').style.display = 'none';
-  $('insideTemp').value = 22;
-  updateSlider($('insideTemp'), 'insideTempVal');
-  $('ceiling').value = '1.0';
-  $('floor').value = '1.0';
-  $('ventType').value = '0';
+  $('area').value = ''; $('height').value = '';
+  $('walls').value = 1; $('windows').value = 2; $('people').value = 2;
+  $('buildingType').value = '0.85'; $('windowType').value = '1.0';
+  $('climate').value = '-25,5200'; $('customTempGroup').style.display = 'none';
+  $('insideTemp').value = 22; updateSlider($('insideTemp'), 'insideTempVal');
+  $('ceiling').value = '1.0'; $('floor').value = '1.0'; $('ventType').value = '0';
+  $('roomType').value = '1.0'; $('fuelPrice').value = '';
+  document.querySelectorAll('#fuelChips .chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('#fuelChips .chip').classList.add('active');
+  currentFuel = 'gas';
+  $('fuelUnitLabel').textContent = '(руб/м³)';
   $('resultContent').innerHTML = `
     <div class="empty-state">
-      <div class="icon">🧮</div>
+      <div class="icon">🌿</div>
       <p>Заполните параметры во вкладке<br><strong>«Расчёт»</strong> и нажмите кнопку<br>«Рассчитать тепловую нагрузку»</p>
     </div>`;
 }

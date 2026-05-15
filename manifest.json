@@ -2,7 +2,7 @@
   "name": "Калькулятор тепловой нагрузки",
   "short_name": "Теплонагрузка",
   "description": "Расчёт тепловой нагрузки для систем отопления по СП 60.13330",
-  "start_url": "/test-dep/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#f0f4ff",
   "theme_color": "#1a56db",
